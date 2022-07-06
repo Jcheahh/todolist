@@ -2,7 +2,7 @@ module Lib (
   someFunc,
 ) where
 
-data Tags = Home | Online | Power | Offline
+data Tag = Home | Online | Power | Offline
 
 data State = Todo' | Started | Next | Waiting | Done
 
@@ -13,7 +13,7 @@ type Time = Int
 data Todo = Todo
   { title :: String
   , state :: Maybe State
-  , tags :: Maybe [Tags]
+  , tags :: Maybe [Tag]
   , clock :: Maybe Clock
   , time :: Maybe Time
   }
@@ -24,9 +24,9 @@ addTodo x = Todo x Nothing Nothing Nothing Nothing
 setState :: State -> Todo -> Todo
 setState st (Todo til _ tag cl ti) = Todo til (Just st) tag cl ti
 
-addTags :: Tags -> Todo -> Todo
-addTags ta (Todo til st Nothing cl ti) = Todo til st (Just [ta]) cl ti
-addTags ta (Todo til st (Just tag) cl ti) = Todo til st (Just (ta : tag)) cl ti
+addTag :: Tag -> Todo -> Todo
+addTag ta (Todo til st Nothing cl ti) = Todo til st (Just [ta]) cl ti
+addTag ta (Todo til st (Just tag) cl ti) = Todo til st (Just (ta : tag)) cl ti
 
 addClock :: Clock -> Todo -> Todo
 addClock clock (Todo til state tag _ ti) = Todo til state tag (Just clock) ti
