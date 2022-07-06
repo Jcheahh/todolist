@@ -12,25 +12,27 @@ type Time = Int
 
 data Todo = Todo
   { title :: String
-  , state :: State
-  , tags :: [Tags]
-  , clock :: Clock
-  , time :: Time
+  , state :: Maybe State
+  , tags :: Maybe [Tags]
+  , clock :: Maybe Clock
+  , time :: Maybe Time
   }
 
--- addTodo :: Todo -> [Todo] -> [Todo]
--- addTodo x xs = x : xs
+addTodo :: String -> Todo
+addTodo x = Todo x Nothing Nothing Nothing Nothing
 
--- addTags :: Todo -> String -> Todo
--- addTags (Todo t i tags) s
---   | s == "offline" = Todo t i (Offline : tags)
---   | s == "online" = Todo t i (Online : tags)
---   | s == "home" = Todo t i (Home : tags)
---   | s == "power" = Todo t i (Power : tags)
---   | otherwise = Todo t i tags
+setState :: State -> Todo -> Todo
+setState st (Todo til _ tag cl ti) = Todo til (Just st) tag cl ti
 
--- toggleIsDone :: Todo -> Todo
--- toggleIsDone (Todo t i tags) = Todo t (not i) tags
+addTags :: Tags -> Todo -> Todo
+addTags ta (Todo til st Nothing cl ti) = Todo til st (Just [ta]) cl ti
+addTags ta (Todo til st (Just tag) cl ti) = Todo til st (Just (ta : tag)) cl ti
+
+addClock :: Clock -> Todo -> Todo
+addClock clock (Todo til state tag _ ti) = Todo til state tag (Just clock) ti
+
+addTime :: Time -> Todo -> Todo
+addTime time (Todo til state tag cl _) = Todo til state tag cl (Just time)
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
