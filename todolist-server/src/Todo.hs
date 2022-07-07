@@ -1,6 +1,4 @@
-module Lib (
-  someFunc,
-) where
+module Todo where
 
 data Tag = Home | Online | Power | Offline
 
@@ -11,12 +9,12 @@ type Clock = Int
 type Time = Int
 
 data Todo = Todo
-  { title :: String
-  , state :: Maybe State
-  , tags :: Maybe [Tag]
-  , clock :: Maybe Clock
-  , time :: Maybe Time
-  }
+    { title :: String
+    , state :: Maybe State
+    , tags :: Maybe [Tag]
+    , clock :: Maybe Clock
+    , time :: Maybe Time
+    }
 
 addTodo :: String -> Todo
 addTodo x = Todo x Nothing Nothing Nothing Nothing
@@ -33,6 +31,3 @@ addClock clock (Todo til state tag _ ti) = Todo til state tag (Just clock) ti
 
 addTime :: Time -> Todo -> Todo
 addTime time (Todo til state tag cl _) = Todo til state tag cl (Just time)
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
