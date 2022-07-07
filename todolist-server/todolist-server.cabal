@@ -25,13 +25,19 @@ source-repository head
 
 library
   exposed-modules:
+      Database
       Lib
+      Test
+      Todo
   other-modules:
       Paths_todolist_server
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      HUnit
+    , base >=4.7 && <5
+    , sqlite-simple
+    , text
   default-language: Haskell2010
 
 executable todolist-server-exe
@@ -42,7 +48,10 @@ executable todolist-server-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      HUnit
+    , base >=4.7 && <5
+    , sqlite-simple
+    , text
     , todolist-server
   default-language: Haskell2010
 
@@ -55,6 +64,9 @@ test-suite todolist-server-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      HUnit
+    , base >=4.7 && <5
+    , sqlite-simple
+    , text
     , todolist-server
   default-language: Haskell2010
