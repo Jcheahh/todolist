@@ -9,7 +9,6 @@ import Data.Int (Int64)
 import qualified Data.Text as T
 import Database.SQLite.Simple
 import Database.SQLite.Simple.FromRow
-import Test.HUnit
 
 data TodoList = TodoList Int String deriving (Show, Eq)
 
@@ -18,6 +17,19 @@ instance FromRow TodoList where
 
 instance ToRow TodoList where
     toRow (TodoList id_ str) = toRow (id_, str)
+
+showSpecificTodo :: Connection -> IO ()
+showSpecificTodo conn = do
+    id <- getLine
+    title <- getLine
+    jogging <-
+        queryNamed
+            conn
+            "SELECT id,title FROM todo WHERE id = :id AND title = :title"
+            [":id" := id, ":title" := title] ::
+            IO [TodoList]
+    -- print jogging
+    mapM_ print jogging
 
 showTodo :: Connection -> IO ()
 showTodo conn = do
@@ -59,6 +71,7 @@ main :: IO ()
 main = do
     conn <- open "todo.db"
     -- tested function
+    showSpecificTodo conn
     showTodo conn
     -- createTodo conn
     -- editTodo conn
