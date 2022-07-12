@@ -19,6 +19,9 @@ data Todo = Todo
 addTodo :: String -> Todo
 addTodo x = Todo x Nothing Nothing Nothing Nothing
 
+editTodo :: String -> Todo -> Todo
+editTodo x (Todo til state tag cl ti) = Todo x state tag cl ti
+
 setState :: State -> Todo -> Todo
 setState st (Todo til _ tag cl ti) = Todo til (Just st) tag cl ti
 
